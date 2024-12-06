@@ -493,9 +493,9 @@ process_wandering_waypoints()
 spawn_wandering_enemy_timer = time.time()
 
 #world
-world = World(world_data, map_image)
-world.process_data()
-world.process_enemies()
+# world = World(world_data, map_image)
+# world.process_data()
+# world.process_enemies()
 
 run = True # should the game continue running?
 while run: #main game loop
