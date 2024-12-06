@@ -640,32 +640,22 @@ while run: #main game loop
                     screen.blit(cursor_turrets[j][0], cursor_rect)
                 if cancel_button.draw(screen):
                     placing_turrets[j][0] = False
-        #upgrading and selling turrets
-        # if selected_turret != []:
-        #     for turret in selected_turret:
-        #         if turret.upgrade_level < turret.upgrade_limit:
-        #             if upgrade_turret_button.draw(screen):
-        #                 if world.money >= turret.upgrade_cost:
-        #                     turret.upgrade(world)
-        #                     selected_turret.remove(turret)
-        #         if sell_turret_button.draw(screen):
-        #             turret.sell(world)
-        #             selected_turret.remove(turret)
-            # if selected_turret == []:
-            #     selected_turret = [None]
 
             if selected_turret != []:
+                print(selected_turret)
                 if upgrade_turret_button.draw(screen):
                     if selected_turret[0].upgrade_level < selected_turret[0].upgrade_limit:
                         for turret in selected_turret:
                             if world.money >= turret.upgrade_cost:
                                 turret.upgrade(world)
-                                # selected_turret_type = turret.type
                                 selected_turret_level = turret.upgrade_level
+                    turrets_to_remove = []
                     for turret in selected_turret:
                         if turret.upgrade_level != selected_turret_level:
+                            turrets_to_remove.append(turret)
                             turret.selected = False
-                            selected_turret.remove(turret)
+                    for turret in turrets_to_remove:
+                        selected_turret.remove(turret)
                 if sell_turret_button.draw(screen):
                     for turret in selected_turret:
                         turret.sell(world)
