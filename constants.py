@@ -39,8 +39,8 @@ ENEMY_SPEED_CAP = 5 #enemy speed increases per level, up to this cap
 ENEMY_ARMOR_CAP = 0.6 #enemy armor increases per level, up to this cap
 
 EFFECTS = {
-    "dmg_over_time": {"dmg_mult": .15, "duration": 6000, "interval_time": 150, 'text': 'DoT'}, # higher dmg_mult, higher damage done based on tower's base dmg
-    "slow": {"speed_mult": .5, "duration": 4000, 'text': "Slow"}, # the lower speed_mult, the slower the enemies go, 0 for stun
+    "dmg_over_time": {"dmg_mult": .125, "duration": 6000, "interval_time": 150, 'text': 'DoT'}, # higher dmg_mult, higher damage done based on tower's base dmg
+    "slow": {"speed_mult": .75, "duration": 4000, 'text': "Slow"}, # the lower speed_mult, the slower the enemies go, 0 for stun
     "stun": {"cooldown": 8000,"duration": 2000, 'text': "Stun"}, #cooldown is how many millisec an enemy is immune to stun after a stun effect falls off
     "armor_pen": {"armor_mult": 1.2, "duration": 0, 'text': "Armor Pen"}, # the higher armor_mult, the more dmg done
 }

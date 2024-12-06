@@ -180,6 +180,6 @@ class Wandering_Enemy(Enemy): #child class of Enemy
             world.money += int(self.value * (1+(world.level/c.TOTAL_LEVELS)*2))
             world.score += int(self.value * (1+(world.level/c.TOTAL_LEVELS)*2))
     
-    def self_destruct(self): # if not destroyed after 30 seconds, self destruct
-        if self.spawn_time < time.time() - 30:
+    def self_destruct(self): # if not destroyed after 15 seconds, self destruct
+        if self.spawn_time < time.time() - 15:
             self.kill()
