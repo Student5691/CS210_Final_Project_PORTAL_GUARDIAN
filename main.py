@@ -204,6 +204,8 @@ def display_data():
         draw_text(temp_user_name, med_font, "white", c.SCREEN_WIDTH + 75, 180)
     else:
         draw_text(user_name, med_font, "black", c.SCREEN_WIDTH + 75, 180)
+    fps = clock.get_fps()
+    draw_text(str(int(fps)), small_font, "grey100", 0,0)
 
 def update_info_panel(item):
     if item is None:
