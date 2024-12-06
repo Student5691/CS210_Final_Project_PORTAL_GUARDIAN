@@ -38,7 +38,7 @@ level_started = False
 volume = 1
 spawn_cooldown = 800
 placing_turrets = [[False, "archer"], [False, "crossbowman"], [False, "melee"], [False, "siege"], [False, "sniper"], [False, "fire"], [False, "frost"], [False, "poison"], [False, "electric"]] #list
-selected_turret = None
+selected_turret = []
 selected_enemy = None
 last_enemy_spawn = pg.time.get_ticks()
 choice = None # tree path choice/enemy select
@@ -46,6 +46,8 @@ enemy_categories = ['Animals', 'Constructs', 'Draconic', 'Goblins', 'Humanoid', 
 user_name = "Anonymous"
 temp_user_name = ''
 typing = False
+second_click_time = 0 #var for double click detection
+double_click_max_time_delay = .25 # max seconds between clicks to distinguish between single and double clicks
 
 archer_sfx = pg.mixer.Sound(TURRET_DATA["archer"][0]["projectile_sfx"])
 archer_sfx.set_volume(.2*volume)
@@ -349,13 +351,13 @@ def update_info_panel(item):
         draw_text("Projectile Speed: " + projectile_speed, small_font, "grey100", c.SCREEN_WIDTH + 7, 460)
         draw_text("Effect: " + effect, small_font, "grey100", c.SCREEN_WIDTH + 7, 480)
     else:
-        print('display_details() function error')
+        print('update_info_panel() function error')
 
 def mouseover_details():
     mouseover_position = pg.mouse.get_pos()
     item_to_display = None
-    if selected_turret:
-        item_to_display = selected_turret
+    if selected_turret != []:
+        item_to_display = selected_turret[0]
     elif selected_enemy:
         item_to_display = selected_enemy
     elif any(i[0] for i in placing_turrets): #search
@@ -400,7 +402,7 @@ def select_turret(mouse_position):
         if (mouse_tile_x, mouse_tile_y) == (turret.tile_x, turret.tile_y):
             clear_enemy_selection()
             return turret
-        
+
 def select_enemy(mouse_position):
     for enemy in enemy_group: #search
         if enemy.rect.collidepoint(mouse_position):
@@ -411,7 +413,7 @@ def select_enemy(mouse_position):
 def clear_turret_selection():
     for turret in turret_group:
         turret.selected = False
-    return None
+    return []
 
 def clear_enemy_selection():
     for enemy in enemy_group:
@@ -519,8 +521,8 @@ while run: #main game loop
         projectile_group.update(world)
 
         #turret/enemy selection if a turret is selected, update teh turret's "selected" member to True
-        if selected_turret:
-            selected_turret.selected = True
+        if selected_turret != []:
+            selected_turret[0].selected = True
         if selected_enemy:
             selected_enemy.selected = True
 
@@ -595,7 +597,6 @@ while run: #main game loop
                 data[3] = time.time()
                 data[4] = True
             if time.time() > data[3] + data[2] and data[1] is False:
-                # data[1] = True
                 data[3] = 0
                 data[4] = False
 
@@ -640,14 +641,36 @@ while run: #main game loop
                 if cancel_button.draw(screen):
                     placing_turrets[j][0] = False
         #upgrading and selling turrets
-        if selected_turret:
-            if selected_turret.upgrade_level < selected_turret.upgrade_limit:
+        # if selected_turret != []:
+        #     for turret in selected_turret:
+        #         if turret.upgrade_level < turret.upgrade_limit:
+        #             if upgrade_turret_button.draw(screen):
+        #                 if world.money >= turret.upgrade_cost:
+        #                     turret.upgrade(world)
+        #                     selected_turret.remove(turret)
+        #         if sell_turret_button.draw(screen):
+        #             turret.sell(world)
+        #             selected_turret.remove(turret)
+            # if selected_turret == []:
+            #     selected_turret = [None]
+
+            if selected_turret != []:
                 if upgrade_turret_button.draw(screen):
-                    if world.money >= selected_turret.upgrade_cost:
-                        selected_turret.upgrade(world)
-            if sell_turret_button.draw(screen):
-                selected_turret.sell(world)
-                selected_turret = None
+                    if selected_turret[0].upgrade_level < selected_turret[0].upgrade_limit:
+                        for turret in selected_turret:
+                            if world.money >= turret.upgrade_cost:
+                                turret.upgrade(world)
+                                # selected_turret_type = turret.type
+                                selected_turret_level = turret.upgrade_level
+                    for turret in selected_turret:
+                        if turret.upgrade_level != selected_turret_level:
+                            turret.selected = False
+                            selected_turret.remove(turret)
+                if sell_turret_button.draw(screen):
+                    for turret in selected_turret:
+                        turret.sell(world)
+                    selected_turret = []
+
         #volume control
         if vol_up_button.draw(screen):
             if volume < 2:
@@ -707,14 +730,30 @@ while run: #main game loop
         if event.type == pg.MOUSEBUTTONDOWN and event.button == 1:
             mouse_position = pg.mouse.get_pos()
             if mouse_position[0] < c.SCREEN_WIDTH and mouse_position[1] < c.SCREEN_HEIGHT:
-                #clear selected turrets
-                selected_turret = clear_turret_selection()
-                selected_enemy = clear_enemy_selection()
-                if any(i[0] for i in placing_turrets):
-                    create_turret(mouse_position, turret_group)
-                else:
-                    selected_turret = select_turret(mouse_position)
-                    selected_enemy = select_enemy(mouse_position)
+                first_click_time = time.time()
+                if first_click_time - second_click_time > double_click_max_time_delay: #single click
+                    #clear selected turrets
+                    selected_turret = clear_turret_selection()
+                    selected_enemy = clear_enemy_selection()
+                    if any(i[0] for i in placing_turrets):
+                        create_turret(mouse_position, turret_group)
+                    else:
+                        turret_selection = select_turret(mouse_position)
+                        if turret_selection is not None:
+                            selected_turret.append(turret_selection)
+                            selected_enemy = select_enemy(mouse_position)
+                else: #double click
+                    if selected_turret != []: #select all like turrets
+                        if select_turret(mouse_position) is not None and selected_turret[0].type == select_turret(mouse_position).type and selected_turret[0].upgrade_level == select_turret(mouse_position).upgrade_level:
+                            selected_enemy = clear_enemy_selection()
+                            selected_turret_type = selected_turret[0].type
+                            selected_turret_level = selected_turret[0].upgrade_level
+                            selected_turret = clear_turret_selection()
+                            for turret in turret_group:
+                                if turret.type == selected_turret_type and turret.upgrade_level == selected_turret_level:
+                                    turret.selected = True
+                                    selected_turret.append(turret)
+                second_click_time = first_click_time
         #mouse click (right)
         if event.type == pg.MOUSEBUTTONDOWN and event.button == 3: # clear turret placement bools, turret selection, or enemy selection
             selected_turret = clear_turret_selection()
