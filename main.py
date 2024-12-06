@@ -38,7 +38,7 @@ level_started = False
 volume = 1
 spawn_cooldown = 800
 placing_turrets = [[False, "archer"], [False, "crossbowman"], [False, "melee"], [False, "siege"], [False, "sniper"], [False, "fire"], [False, "frost"], [False, "poison"], [False, "electric"]] #list
-selected_turret = []
+selected_turrets = []
 selected_enemy = None
 last_enemy_spawn = pg.time.get_ticks()
 choice = None # tree path choice/enemy select
@@ -356,8 +356,8 @@ def update_info_panel(item):
 def mouseover_details():
     mouseover_position = pg.mouse.get_pos()
     item_to_display = None
-    if selected_turret != []:
-        item_to_display = selected_turret[0]
+    if selected_turrets != []:
+        item_to_display = selected_turrets[0]
     elif selected_enemy:
         item_to_display = selected_enemy
     elif any(i[0] for i in placing_turrets): #search
@@ -521,8 +521,8 @@ while run: #main game loop
         projectile_group.update(world)
 
         #turret/enemy selection if a turret is selected, update teh turret's "selected" member to True
-        if selected_turret != []:
-            selected_turret[0].selected = True
+        if selected_turrets != []:
+            selected_turrets[0].selected = True
         if selected_enemy:
             selected_enemy.selected = True
 
@@ -641,25 +641,25 @@ while run: #main game loop
                 if cancel_button.draw(screen):
                     placing_turrets[j][0] = False
 
-            if selected_turret != []:
-                print(selected_turret)
+            if selected_turrets != []: #upgrade and sell selected turret(s)
+                print(selected_turrets)
                 if upgrade_turret_button.draw(screen):
-                    if selected_turret[0].upgrade_level < selected_turret[0].upgrade_limit:
-                        for turret in selected_turret:
+                    if selected_turrets[0].upgrade_level < selected_turrets[0].upgrade_limit:
+                        for turret in selected_turrets:
                             if world.money >= turret.upgrade_cost:
                                 turret.upgrade(world)
                                 selected_turret_level = turret.upgrade_level
                     turrets_to_remove = []
-                    for turret in selected_turret:
+                    for turret in selected_turrets:
                         if turret.upgrade_level != selected_turret_level:
                             turrets_to_remove.append(turret)
                             turret.selected = False
                     for turret in turrets_to_remove:
-                        selected_turret.remove(turret)
+                        selected_turrets.remove(turret)
                 if sell_turret_button.draw(screen):
-                    for turret in selected_turret:
+                    for turret in selected_turrets:
                         turret.sell(world)
-                    selected_turret = []
+                    selected_turrets = []
 
         #volume control
         if vol_up_button.draw(screen):
@@ -723,30 +723,30 @@ while run: #main game loop
                 first_click_time = time.time()
                 if first_click_time - second_click_time > double_click_max_time_delay: #single click
                     #clear selected turrets
-                    selected_turret = clear_turret_selection()
+                    selected_turrets = clear_turret_selection()
                     selected_enemy = clear_enemy_selection()
                     if any(i[0] for i in placing_turrets):
                         create_turret(mouse_position, turret_group)
                     else:
                         turret_selection = select_turret(mouse_position)
                         if turret_selection is not None:
-                            selected_turret.append(turret_selection)
+                            selected_turrets.append(turret_selection)
                             selected_enemy = select_enemy(mouse_position)
                 else: #double click
-                    if selected_turret != []: #select all like turrets
-                        if select_turret(mouse_position) is not None and selected_turret[0].type == select_turret(mouse_position).type and selected_turret[0].upgrade_level == select_turret(mouse_position).upgrade_level:
+                    if selected_turrets != []: #select all like turrets
+                        if select_turret(mouse_position) is not None and selected_turrets[0].type == select_turret(mouse_position).type and selected_turrets[0].upgrade_level == select_turret(mouse_position).upgrade_level:
                             selected_enemy = clear_enemy_selection()
-                            selected_turret_type = selected_turret[0].type
-                            selected_turret_level = selected_turret[0].upgrade_level
-                            selected_turret = clear_turret_selection()
+                            selected_turret_type = selected_turrets[0].type
+                            selected_turret_level = selected_turrets[0].upgrade_level
+                            selected_turrets = clear_turret_selection()
                             for turret in turret_group:
                                 if turret.type == selected_turret_type and turret.upgrade_level == selected_turret_level:
                                     turret.selected = True
-                                    selected_turret.append(turret)
+                                    selected_turrets.append(turret)
                 second_click_time = first_click_time
         #mouse click (right)
         if event.type == pg.MOUSEBUTTONDOWN and event.button == 3: # clear turret placement bools, turret selection, or enemy selection
-            selected_turret = clear_turret_selection()
+            selected_turrets = clear_turret_selection()
             selected_enemy = clear_enemy_selection()
             for i in range(9):
                 placing_turrets[i][0] = False
@@ -763,7 +763,7 @@ while run: #main game loop
                 try:
                     func = world.undo_deck.pop()
                     func()
-                    selected_turret = clear_turret_selection()
+                    selected_turrets = clear_turret_selection()
                 except:
                     pass
             if event.key == pg.K_RETURN:
