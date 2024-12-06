@@ -47,7 +47,7 @@ user_name = "Anonymous"
 temp_user_name = ''
 typing = False
 second_click_time = 0 #var for double click detection
-double_click_max_time_delay = .25 # max seconds between clicks to distinguish between single and double clicks
+double_click_max_time_delay = .13 # max seconds between clicks to distinguish between single and double clicks
 
 archer_sfx = pg.mixer.Sound(TURRET_DATA["archer"][0]["projectile_sfx"])
 archer_sfx.set_volume(.2*volume)
