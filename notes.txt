@@ -1,1 +1,21 @@
 Requires pip install binarytree
+
+Things to add
+    perk tree and level up system
+    enemies drop power ups or items or something
+    AOE, not just multi-target
+    Main Menu
+    Options Menu
+    tutorial menu
+    Configuration dictionary with persistence (save user settings)
+    save file for hiscores using pickle instead of a .txt that can be edited
+        if save file/txt doesn't exist create a blank one
+    add more levels/endless wave mode
+    add more enemy types
+    add more waves per enemy category
+    add more towers
+    add more upgrades
+    add unique projectile images per upgrade or per several upgrades
+    add more SFX for towers to cycle through
+    use sprite sheets to animate projectiles (at least for lightning to make strikes rather than a ball thrown)
+    Achievements like perfect game, only one type, used every tower, all maxed towers at the end

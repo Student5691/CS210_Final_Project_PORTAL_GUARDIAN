@@ -25,7 +25,7 @@ class Enemy(pg.sprite.Sprite):
             self.base_speed = c.ENEMY_SPEED_CAP
         self.speed = self.base_speed
         # self.value = int(ENEMY_DATA[self.type[0]][self.type[1]]["value"]*c.DIFFICULTY_VALUE_MULT(self.world.level))
-        self.value = int(ENEMY_DATA[self.type[0]][self.type[1]]["value"]^c.DIFFICULTY_VALUE_MULT(self.world.level))
+        self.value = 1 + int(ENEMY_DATA[self.type[0]][self.type[1]]["value"]*c.DIFFICULTY_VALUE_MULT(self.world.level))
 
         if ENEMY_DATA[self.type[0]][self.type[1]]["armor"]*c.DIFFICULTY_ARMOR_MULT(self.world.level) < c.ENEMY_ARMOR_CAP:
             self.armor = ENEMY_DATA[self.type[0]][self.type[1]]["armor"]*c.DIFFICULTY_ARMOR_MULT(self.world.level)
@@ -43,6 +43,8 @@ class Enemy(pg.sprite.Sprite):
         self.rect.center = self.position
         self.spawn_time = time.time()
         self.selected = False
+        print(ENEMY_DATA[self.type[0]][self.type[1]]["value"]*c.DIFFICULTY_VALUE_MULT(self.world.level))
+        print(self.value)
 
     def update(self, world):
         self.move(world)

@@ -730,7 +730,7 @@ while run: #main game loop
                         turret_selection = select_turret(mouse_position)
                         if turret_selection is not None:
                             selected_turrets.append(turret_selection)
-                            selected_enemy = select_enemy(mouse_position)
+                        selected_enemy = select_enemy(mouse_position)
                 else: #double click
                     if selected_turrets != []: #select all like turrets
                         if select_turret(mouse_position) is not None and selected_turrets[0].type == select_turret(mouse_position).type and selected_turrets[0].upgrade_level == select_turret(mouse_position).upgrade_level:
