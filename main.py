@@ -47,7 +47,7 @@ user_name = "Anonymous"
 temp_user_name = ''
 typing = False
 second_click_time = 0 #var for double click detection
-double_click_max_time_delay = .13 # max seconds between clicks to distinguish between single and double clicks
+double_click_max_time_delay = .3 # max seconds between clicks to distinguish between single and double clicks
 
 archer_sfx = pg.mixer.Sound(TURRET_DATA["archer"][0]["projectile_sfx"])
 archer_sfx.set_volume(.2*volume)
@@ -743,7 +743,47 @@ while run: #main game loop
                                 if turret.type == selected_turret_type and turret.upgrade_level == selected_turret_level:
                                     turret.selected = True
                                     selected_turrets.append(turret)
+                    else:
+                        #clear selected turrets
+                        selected_turrets = clear_turret_selection()
+                        selected_enemy = clear_enemy_selection()
+                        if any(i[0] for i in placing_turrets):
+                            create_turret(mouse_position, turret_group)
+                        else:
+                            turret_selection = select_turret(mouse_position)
+                            if turret_selection is not None:
+                                selected_turrets.append(turret_selection)
+                            selected_enemy = select_enemy(mouse_position)
                 second_click_time = first_click_time
+
+        # if event.type == pg.MOUSEBUTTONDOWN and event.button == 1:
+        #     mouse_position = pg.mouse.get_pos()
+        #     if mouse_position[0] < c.SCREEN_WIDTH and mouse_position[1] < c.SCREEN_HEIGHT:
+        #         first_click_time = time.time()
+        #         if first_click_time - second_click_time > double_click_max_time_delay: #single click
+        #             #clear selected turrets
+        #             selected_turrets = clear_turret_selection()
+        #             selected_enemy = clear_enemy_selection()
+        #             if any(i[0] for i in placing_turrets):
+        #                 create_turret(mouse_position, turret_group)
+        #             else:
+        #                 turret_selection = select_turret(mouse_position)
+        #                 if turret_selection is not None:
+        #                     selected_turrets.append(turret_selection)
+        #                 selected_enemy = select_enemy(mouse_position)
+        #         else: #double click
+        #             if selected_turrets != []: #select all like turrets
+        #                 if select_turret(mouse_position) is not None and selected_turrets[0].type == select_turret(mouse_position).type and selected_turrets[0].upgrade_level == select_turret(mouse_position).upgrade_level:
+        #                     selected_enemy = clear_enemy_selection()
+        #                     selected_turret_type = selected_turrets[0].type
+        #                     selected_turret_level = selected_turrets[0].upgrade_level
+        #                     selected_turrets = clear_turret_selection()
+        #                     for turret in turret_group:
+        #                         if turret.type == selected_turret_type and turret.upgrade_level == selected_turret_level:
+        #                             turret.selected = True
+        #                             selected_turrets.append(turret)
+        #         second_click_time = first_click_time
+
         #mouse click (right)
         if event.type == pg.MOUSEBUTTONDOWN and event.button == 3: # clear turret placement bools, turret selection, or enemy selection
             selected_turrets = clear_turret_selection()
