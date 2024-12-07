@@ -680,17 +680,36 @@ while run: #main game loop
     #game over
     else:
         pg.draw.rect(screen, "dodgerblue", (200, 200, 400, 200), border_radius = 30)
+        
+        for i in range(9):
+            buy_turret_buttons[i].draw(screen)
+                # placing_turrets[i][0] = True
+                # for k in range(9):
+                #     if k != i:
+                #         placing_turrets[k][0] = False
+        vol_up_button.draw(screen)
+        vol_down_button.draw(screen)
+        if hiscores_button.draw(screen):
+            display_hiscores()
+
         if game_outcome == -1:
             draw_text("GAME OVER", large_font, "grey0", 310, 230)
         elif game_outcome == 1:
             draw_text("You WIN", large_font, "grey0", 310, 230)
-        if restart_button.draw(screen): # rests level is restart button pressed
-            save_hiscore()
-            with open('data\\scores.txt', "r") as file: #update hiscores UI, players score will appear if it achieved top 10
-                hiscores = []
-                for line in file:
-                    score, name = line.strip().split(", ")
-                    hiscores.append((int(score), name))
+            world.score += world.hp*c.SCORE_VALUE_PER_HP_ON_WIN
+        save_hiscore()
+        with open('data\\scores.txt', "r") as file: #update hiscores UI, players score will appear if it achieved top 10
+            hiscores = []
+            for line in file:
+                score, name = line.strip().split(", ")
+                hiscores.append((int(score), name))
+        if restart_button.draw(screen): # resets level is restart button pressed
+            # save_hiscore()
+            # with open('data\\scores.txt', "r") as file: #update hiscores UI, players score will appear if it achieved top 10
+            #     hiscores = []
+            #     for line in file:
+            #         score, name = line.strip().split(", ")
+            #         hiscores.append((int(score), name))
             world.score = 0
             game_over = False
             level_started = False
@@ -797,14 +816,15 @@ while run: #main game loop
         if event.type == pg.KEYDOWN and not typing:
             if event.key == pg.K_m:
                 world.money += 1000 #cheat
+            if event.key == pg.K_s:
+                world.score += 1000 #cheat
             if event.key == pg.K_h:
-                world.hp += 10 #cheat
+                world.hp -= 10 #anti cheat
             if keys[pg.K_z] and keys[pg.K_LCTRL]: #control-z / undo a number of tower builds and/or upgrades equal to the corresponding value in constants.py - deque implementation
                 try:
                     func = world.undo_deck.pop()
                     print(func)
                     func()
-                    
                     selected_turrets = clear_turret_selection()
                 except:
                     pass

@@ -11,6 +11,7 @@ FPS = 60
 
 #player starting resources
 PLAYER_HP = 100
+SCORE_VALUE_PER_HP_ON_WIN = 10
 PLAYER_MONEY = 100
 
 # BUY_COST = 200
