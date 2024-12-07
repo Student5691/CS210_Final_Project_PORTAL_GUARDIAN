@@ -42,6 +42,7 @@ class Projectile(pg.sprite.Sprite):
                     self.position += self.movement.normalize() * self.distance
                 self.apply_hit()
                 self.kill()
+                del self
         self.rect.center = self.position
         self.angle = math.degrees(math.atan2(self.position[1] - self.target_enemy.position[1], self.target_enemy.position[0] - self.position[0]))
         self.image = pg.transform.rotate(self.original_image, self.angle)
@@ -60,3 +61,4 @@ class Projectile(pg.sprite.Sprite):
     def self_destruct(self): #self destruct after 15 seconds
         if time.time() > self.created + 15:
             self.kill()
+            del self
