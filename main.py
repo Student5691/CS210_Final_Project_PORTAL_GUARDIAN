@@ -642,9 +642,9 @@ while run: #main game loop
                     placing_turrets[j][0] = False
 
             if selected_turrets != []: #upgrade and sell selected turret(s)
-                if upgrade_turret_button.draw(screen):
-                    selected_turret_level = selected_turrets[0].upgrade_level
-                    if selected_turrets[0].upgrade_level < selected_turrets[0].upgrade_limit:
+                selected_turret_level = selected_turrets[0].upgrade_level
+                if selected_turrets[0].upgrade_level < selected_turrets[0].upgrade_limit:
+                    if upgrade_turret_button.draw(screen):
                         for turret in selected_turrets:
                             if world.money >= turret.upgrade_cost:
                                 turret.upgrade(world)
