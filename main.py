@@ -219,7 +219,7 @@ def update_info_panel(item):
         image = pg.transform.scale(pg.image.load(data["image"]).convert_alpha(), img_size)
         damage = str(data["damage"])
         max_range = str(data["range"])
-        time_between_shoots = str(data["cooldown"])
+        time_between_shoots = str(round(data["cooldown"]/1000, 1))
         damage_type = str(data["damage_type"])
         effect = '' 
         for i in range(len(data["effect"])):
@@ -243,7 +243,7 @@ def update_info_panel(item):
         draw_text("Upgrade Cost: " + upgrade_cost, small_font, (255, 197, 7), c.SCREEN_WIDTH + 7, 340)
         draw_text("Damage: " + damage, small_font, "green", c.SCREEN_WIDTH + 7, 360)
         draw_text("Damage type: " + damage_type, small_font, "grey100", c.SCREEN_WIDTH + 7, 380)
-        draw_text("Cooldown: " + time_between_shoots, small_font, "grey100", c.SCREEN_WIDTH + 7, 400)
+        draw_text("Cooldown: " + time_between_shoots + " seconds", small_font, "grey100", c.SCREEN_WIDTH + 7, 400)
         draw_text("Range: " + max_range, small_font, "grey100", c.SCREEN_WIDTH + 7, 420)
         draw_text("Multi Target: " + targets, small_font, "grey100", c.SCREEN_WIDTH + 7, 440)
         draw_text("Projectile Speed: " + projectile_speed, small_font, "grey100", c.SCREEN_WIDTH + 7, 460)
@@ -290,7 +290,7 @@ def update_info_panel(item):
         image = pg.transform.scale(pg.image.load(data["image"]).convert_alpha(), img_size)
         damage = str(data["damage"])
         max_range = str(data["range"])
-        time_between_shoots = str(data["cooldown"])
+        time_between_shoots = str(round(data["cooldown"]/1000, 1))
         damage_type = str(data["damage_type"])
         effect = '' 
         for i in range(len(data["effect"])):
@@ -312,7 +312,7 @@ def update_info_panel(item):
         draw_text("Cost: " + cost, small_font, (255, 197, 7), c.SCREEN_WIDTH + 7, 340)
         draw_text("Damage: " + damage, small_font, "green", c.SCREEN_WIDTH + 7, 360)
         draw_text("Damage type: " + damage_type, small_font, "grey100", c.SCREEN_WIDTH + 7, 380)
-        draw_text("Cooldown: " + time_between_shoots, small_font, "grey100", c.SCREEN_WIDTH + 7, 400)
+        draw_text("Cooldown: " + time_between_shoots + " seconds", small_font, "grey100", c.SCREEN_WIDTH + 7, 400)
         draw_text("Range: " + max_range, small_font, "grey100", c.SCREEN_WIDTH + 7, 420)
         draw_text("Multi Target: " + targets, small_font, "grey100", c.SCREEN_WIDTH + 7, 440)
         draw_text("Projectile Speed: " + projectile_speed, small_font, "grey100", c.SCREEN_WIDTH + 7, 460)
@@ -324,7 +324,7 @@ def update_info_panel(item):
         image = pg.transform.scale(pg.image.load(data["image"]).convert_alpha(), img_size)
         damage = str(data["damage"])
         max_range = str(data["range"])
-        time_between_shoots = str(data["cooldown"])
+        time_between_shoots = str(round(data["cooldown"]/1000, 1))
         damage_type = str(data["damage_type"])
         effect = '' 
         for i in range(len(data["effect"])):
@@ -345,7 +345,7 @@ def update_info_panel(item):
         draw_text("Cost: " + cost, small_font, (255, 197, 7), c.SCREEN_WIDTH + 7, 340)
         draw_text("Damage: " + damage, small_font, "green", c.SCREEN_WIDTH + 7, 360)
         draw_text("Damage type: " + damage_type, small_font, "grey100", c.SCREEN_WIDTH + 7, 380)
-        draw_text("Cooldown: " + time_between_shoots, small_font, "grey100", c.SCREEN_WIDTH + 7, 400)
+        draw_text("Cooldown: " + time_between_shoots + " seconds", small_font, "grey100", c.SCREEN_WIDTH + 7, 400)
         draw_text("Range: " + max_range, small_font, "grey100", c.SCREEN_WIDTH + 7, 420)
         draw_text("Multi Target: " + targets, small_font, "grey100", c.SCREEN_WIDTH + 7, 440)
         draw_text("Projectile Speed: " + projectile_speed, small_font, "grey100", c.SCREEN_WIDTH + 7, 460)
