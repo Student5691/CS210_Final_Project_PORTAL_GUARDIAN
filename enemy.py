@@ -43,8 +43,6 @@ class Enemy(pg.sprite.Sprite):
         self.rect.center = self.position
         self.spawn_time = time.time()
         self.selected = False
-        print(ENEMY_DATA[self.type[0]][self.type[1]]["value"]*c.DIFFICULTY_VALUE_MULT(self.world.level))
-        print(self.value)
 
     def update(self, world):
         self.move(world)

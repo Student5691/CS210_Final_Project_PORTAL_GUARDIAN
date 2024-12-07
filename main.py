@@ -643,6 +643,7 @@ while run: #main game loop
 
             if selected_turrets != []: #upgrade and sell selected turret(s)
                 if upgrade_turret_button.draw(screen):
+                    selected_turret_level = selected_turrets[0].upgrade_level
                     if selected_turrets[0].upgrade_level < selected_turrets[0].upgrade_limit:
                         for turret in selected_turrets:
                             if world.money >= turret.upgrade_cost:
@@ -761,7 +762,9 @@ while run: #main game loop
             if keys[pg.K_z] and keys[pg.K_LCTRL]: #control-z / undo a number of tower builds and/or upgrades equal to the corresponding value in constants.py - deque implementation
                 try:
                     func = world.undo_deck.pop()
+                    print(func)
                     func()
+                    
                     selected_turrets = clear_turret_selection()
                 except:
                     pass
