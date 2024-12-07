@@ -62,5 +62,8 @@ def DIFFICULTY_SPEED_ADD(level):
 def DIFFICULTY_ARMOR_MULT(level):
     return (1 + (level/TOTAL_LEVELS)*3)
 
-def DIFFICULTY_VALUE_MULT(level):
-    return (1 + (level/TOTAL_LEVELS)*2)
+# def DIFFICULTY_VALUE_MULT(level):
+#     return (1 + (level/TOTAL_LEVELS)*1.5)
+
+def DIFFICULTY_VALUE_MULT(level): #testing this instead to give less money early on and more later;
+    return ((15**((level+1)/TOTAL_LEVELS))/(2**((level+1+TOTAL_LEVELS)/TOTAL_LEVELS))/1.2)
