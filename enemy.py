@@ -61,6 +61,7 @@ class Enemy(pg.sprite.Sprite):
             world.missed_enemies += 1
             world.hp -= 1
             del self
+            return
         #calc current distance to target waypoint
         distance = self.movement.length()
         if distance >= self.speed * world.game_speed:
@@ -96,6 +97,7 @@ class Enemy(pg.sprite.Sprite):
             world.money += int(self.value)
             world.score += int(self.value)
             del self
+            return
     
     def implement_effect(self):
         if len(self.effect_data) == 0:
@@ -184,11 +186,13 @@ class Wandering_Enemy(Enemy): #child class of Enemy
             world.money += int(self.value * (1+(world.level/c.TOTAL_LEVELS)*2))
             world.score += int(self.value * (1+(world.level/c.TOTAL_LEVELS)*2))
             del self
+            return
     
     def self_destruct(self): # if not destroyed after 15 seconds, self destruct
         if self.spawn_time < time.time() - 15:
             self.kill()
             del self
+            return
     
     def __del__(self):
         print(f"{self.name}, {self} is being garbage collected")

@@ -43,6 +43,7 @@ class Projectile(pg.sprite.Sprite):
                 self.apply_hit()
                 self.kill()
                 del self
+                return
         self.rect.center = self.position
         self.angle = math.degrees(math.atan2(self.position[1] - self.target_enemy.position[1], self.target_enemy.position[0] - self.position[0]))
         self.image = pg.transform.rotate(self.original_image, self.angle)
@@ -62,6 +63,7 @@ class Projectile(pg.sprite.Sprite):
         if time.time() > self.created + 15:
             self.kill()
             del self
+            return
 
     def __del__(self):
-        print(f"{self.name}, {self} is being garbage collected")
+        print(f"{self} is being garbage collected")
