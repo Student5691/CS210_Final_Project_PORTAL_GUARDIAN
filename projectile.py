@@ -62,3 +62,6 @@ class Projectile(pg.sprite.Sprite):
         if time.time() > self.created + 15:
             self.kill()
             del self
+
+    def __del__(self):
+        print(f"{self.name}, {self} is being garbage collected")

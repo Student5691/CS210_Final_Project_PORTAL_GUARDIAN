@@ -189,3 +189,6 @@ class Wandering_Enemy(Enemy): #child class of Enemy
         if self.spawn_time < time.time() - 15:
             self.kill()
             del self
+    
+    def __del__(self):
+        print(f"{self.name}, {self} is being garbage collected")
