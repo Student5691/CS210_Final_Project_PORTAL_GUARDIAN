@@ -48,6 +48,8 @@ temp_user_name = ''
 typing = False
 second_click_time = 0 #var for double click detection
 double_click_max_time_delay = .3 # max seconds between clicks to distinguish between single and double clicks
+hiscore_saved = False
+final_score_updated = False
 
 archer_sfx = pg.mixer.Sound(TURRET_DATA["archer"][0]["projectile_sfx"])
 archer_sfx.set_volume(.2*volume)
@@ -72,7 +74,7 @@ sfx_data = { #hash and list
     #[specific sfx, play sound this tick?, seconds till next sfx iteration may be played, time when sfx was played for calculating next available sfx, is the sfx on cooldown?]
     "archer": [archer_sfx, False, TURRET_DATA["archer"][0]["cooldown"]/1750, 0, False],
     "crossbowman": [crossbowman_sfx, False, TURRET_DATA["crossbowman"][0]["cooldown"]/1750, 0, False],
-    "melee": [melee_sfx, False, TURRET_DATA["melee"][0]["cooldown"]/1750, 0, False],
+    "melee": [melee_sfx, False, TURRET_DATA["melee"][0]["cooldown"]/1500, 0, False],
     "siege": [siege_sfx, False, TURRET_DATA["siege"][0]["cooldown"]/1750, 0, False],
     "sniper": [sniper_sfx, False, TURRET_DATA["sniper"][0]["cooldown"]/1000, 0, False],
     "fire": [fire_sfx, False, TURRET_DATA["fire"][0]["cooldown"]/1750, 0, False],
@@ -219,8 +221,8 @@ def update_info_panel(item):
         image = pg.transform.scale(pg.image.load(data["image"]).convert_alpha(), img_size)
         damage = str(data["damage"])
         max_range = str(data["range"])
-        time_between_shoots = str(round(data["cooldown"]/1000, 1))
-        damage_type = str(data["damage_type"])
+        time_between_shoots = str(round(data["cooldown"]/1000, 2))
+        damage_type = str(data["damage_type"]).title()
         effect = '' 
         for i in range(len(data["effect"])):
             if len(data["effect"]) - i == 1:
@@ -255,7 +257,7 @@ def update_info_panel(item):
         image = pg.transform.scale(pg.image.load(data["image"]).convert_alpha(), img_size)
         hp = str(int(item.base_hp))
         speed = str(int(item.base_speed))
-        armor = str(int(item.armor))
+        armor = str(int(item.armor*100))
         resistances = ''
         for i in range(len(data["dmg_resist"])):
             if len(data["dmg_resist"]) - i == 1:
@@ -290,8 +292,8 @@ def update_info_panel(item):
         image = pg.transform.scale(pg.image.load(data["image"]).convert_alpha(), img_size)
         damage = str(data["damage"])
         max_range = str(data["range"])
-        time_between_shoots = str(round(data["cooldown"]/1000, 1))
-        damage_type = str(data["damage_type"])
+        time_between_shoots = str(round(data["cooldown"]/1000, 2))
+        damage_type = str(data["damage_type"]).title()
         effect = '' 
         for i in range(len(data["effect"])):
             if len(data["effect"]) - i == 1:
@@ -324,8 +326,8 @@ def update_info_panel(item):
         image = pg.transform.scale(pg.image.load(data["image"]).convert_alpha(), img_size)
         damage = str(data["damage"])
         max_range = str(data["range"])
-        time_between_shoots = str(round(data["cooldown"]/1000, 1))
-        damage_type = str(data["damage_type"])
+        time_between_shoots = str(round(data["cooldown"]/1000, 2))
+        damage_type = str(data["damage_type"]).title()
         effect = '' 
         for i in range(len(data["effect"])):
             if len(data["effect"]) - i == 1:
@@ -696,13 +698,17 @@ while run: #main game loop
             draw_text("GAME OVER", large_font, "grey0", 310, 230)
         elif game_outcome == 1:
             draw_text("You WIN", large_font, "grey0", 310, 230)
-            world.score += world.hp*c.SCORE_VALUE_PER_HP_ON_WIN
-        save_hiscore()
-        with open('data\\scores.txt', "r") as file: #update hiscores UI, players score will appear if it achieved top 10
-            hiscores = []
-            for line in file:
-                score, name = line.strip().split(", ")
-                hiscores.append((int(score), name))
+            if not final_score_updated:
+                world.score += world.hp*c.SCORE_VALUE_PER_HP_ON_WIN
+                final_score_updated = True
+        if not hiscore_saved:
+            save_hiscore()
+            with open('data\\scores.txt', "r") as file: #update hiscores UI, players score will appear if it achieved top 10
+                hiscores = []
+                for line in file:
+                    score, name = line.strip().split(", ")
+                    hiscores.append((int(score), name))
+            hiscore_saved = True
         if restart_button.draw(screen): # resets level is restart button pressed
             # save_hiscore()
             # with open('data\\scores.txt', "r") as file: #update hiscores UI, players score will appear if it achieved top 10
@@ -713,6 +719,8 @@ while run: #main game loop
             world.score = 0
             game_over = False
             level_started = False
+            hiscore_saved = False
+            final_score_updated = False
             for i in range(9):
                 placing_turrets[i][0] = False
             clear_turret_selection()
@@ -842,5 +850,7 @@ while run: #main game loop
     #update display
     pg.display.flip()
 #save highscore upon close
-save_hiscore()
+if not hiscore_saved:
+    save_hiscore()
+    hiscore_saved = True
 pg.quit()

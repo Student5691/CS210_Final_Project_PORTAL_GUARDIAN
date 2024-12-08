@@ -138,7 +138,7 @@ TURRET_DATA = {
     "melee" : [
         {
         "range": 175,
-        "cooldown": 800,
+        "cooldown": 700,
         "damage": 20,
         "damage_type": "slash",
         "effect": ["dmg_over_time"],
@@ -152,7 +152,7 @@ TURRET_DATA = {
         },
         {
         "range": 175,
-        "cooldown": 700,
+        "cooldown": 550,
         "damage": 25,
         "damage_type": "slash",
         "effect": ["dmg_over_time"],
@@ -165,7 +165,7 @@ TURRET_DATA = {
         },
         {
         "range": 175,
-        "cooldown": 500,
+        "cooldown": 400,
         "damage": 30,
         "damage_type": "slash",
         "effect": ["dmg_over_time"],
@@ -178,7 +178,7 @@ TURRET_DATA = {
         },
         {
         "range": 175,
-        "cooldown": 300,
+        "cooldown": 250,
         "damage": 40,
         "damage_type": "slash",
         "effect": ["dmg_over_time"],
@@ -191,7 +191,7 @@ TURRET_DATA = {
         },
         {
         "range": 200,
-        "cooldown": 100,
+        "cooldown": 50,
         "damage": 55,
         "damage_type": "slash",
         "effect": ["dmg_over_time"],

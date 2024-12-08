@@ -135,7 +135,7 @@ ENEMY_DATA = { #hash table of lists of hash tables
         {
             "name": "Dragon Scout",
             "hp": 225,
-            "speed": 3,
+            "speed": 2.75,
             "armor": .2,
             "dmg_resist": ["fire", "poison"],
             "dmg_vulnerability": ["pierce", "frost", "heavy", "electric"],
