@@ -34,18 +34,18 @@ UNDO_MAX = 10
 
 TURRET_SELL_VALUE = 0.75 #percentage of total money spent refunded
 
-VULNERABILITY_MULT = 1.4 #higher values make some towers more effective
-RESISTANCE_MULT = 0.8 #higher values make some towers less effective
-ENEMY_SPEED_CAP = 5 #enemy speed increases per level, up to this cap
-ENEMY_ARMOR_CAP = 0.6 #enemy armor increases per level, up to this cap
+VULNERABILITY_MULT = 1.5 #higher values make some towers more effective
+RESISTANCE_MULT = 0.7 #higher values make some towers less effective
+ENEMY_SPEED_CAP = 4.5 #enemy speed increases per level, up to this cap
+ENEMY_ARMOR_CAP = 0.55 #enemy armor increases per level, up to this cap
 
 EFFECTS = {
-    "dmg_over_time": {"dmg_mult": .125, "duration": 6900, "interval_time": 150, 'text': 'DoT'}, # higher dmg_mult, higher damage done based on tower's base dmg
-    "slow": {"speed_mult": .75, "duration": 4000, 'text': "Slow"}, # the lower speed_mult, the slower the enemies go, 0 for stun
-    "stun": {"cooldown": 8000,"duration": 2000, 'text': "Stun"}, #cooldown is how many millisec an enemy is immune to stun after a stun effect falls off
-    "armor_pen": {"armor_mult": 1.2, "duration": 0, 'text': "Armor Pen"}, # the higher armor_mult, the more dmg done
+    "dmg_over_time": {"dmg_mult": .13, "duration": 7500, "interval_time": 150, 'text': 'DoT'}, # higher dmg_mult, higher damage done based on tower's base dmg
+    "slow": {"speed_mult": .7, "duration": 4000, 'text': "Slow"}, # the lower speed_mult, the slower the enemies go, 0 for stun
+    "stun": {"cooldown": 7000,"duration": 2500, 'text': "Stun"}, #cooldown is how many millisec an enemy is immune to stun after a stun effect falls off
+    "armor_pen": {"armor_mult": 1.5, "duration": 0, 'text': "Armor Pen"}, # the higher armor_mult, the more dmg done
 }
-ARMOR_PEN_EFFECTIVENESS = .5 #high numbers are more effective, 1 for no change, 0 to nullify the effect, negative values heal the target, values between 0 and 1 (exclusive) to dampen the effect
+ARMOR_PEN_EFFECTIVENESS = .75 #high numbers are more effective, 1 for no change, 0 to nullify the effect, negative values heal the target, values between 0 and 1 (exclusive) to dampen the effect
 
 ENEMY_CATEGORIES = ['animal', 'construct', 'dragon', 'goblin', 'humanoid', 'monstrous', 'undead'] #used to convert indexes to keys for hash table look ups in certain cases
 
