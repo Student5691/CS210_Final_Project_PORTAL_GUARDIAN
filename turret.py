@@ -150,5 +150,5 @@ class Turret(pg.sprite.Sprite):
         self.turret_group.add(self)
         world.money -= refund
 
-    def __del__(self):
-        print(f"{self.name}, {self} is being garbage collected")
+    # def __del__(self):
+    #     print(f"{self.name}, {self} is being garbage collected")

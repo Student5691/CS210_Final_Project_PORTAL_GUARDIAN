@@ -194,5 +194,5 @@ class Wandering_Enemy(Enemy): #child class of Enemy
             del self
             return
     
-    def __del__(self):
-        print(f"{self.name}, {self} is being garbage collected")
+    # def __del__(self):
+    #     print(f"{self.name}, {self} is being garbage collected")
