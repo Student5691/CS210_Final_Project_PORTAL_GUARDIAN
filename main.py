@@ -74,7 +74,7 @@ sfx_data = { #hash and list
     #[specific sfx, play sound this tick?, seconds till next sfx iteration may be played, time when sfx was played for calculating next available sfx, is the sfx on cooldown?]
     "archer": [archer_sfx, False, TURRET_DATA["archer"][0]["cooldown"]/1750, 0, False],
     "crossbowman": [crossbowman_sfx, False, TURRET_DATA["crossbowman"][0]["cooldown"]/1750, 0, False],
-    "melee": [melee_sfx, False, TURRET_DATA["melee"][0]["cooldown"]/1500, 0, False],
+    "melee": [melee_sfx, False, TURRET_DATA["melee"][0]["cooldown"]/1000, 0, False],
     "siege": [siege_sfx, False, TURRET_DATA["siege"][0]["cooldown"]/1750, 0, False],
     "sniper": [sniper_sfx, False, TURRET_DATA["sniper"][0]["cooldown"]/1000, 0, False],
     "fire": [fire_sfx, False, TURRET_DATA["fire"][0]["cooldown"]/1750, 0, False],
