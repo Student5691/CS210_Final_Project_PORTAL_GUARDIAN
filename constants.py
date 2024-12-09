@@ -17,7 +17,7 @@ PLAYER_MONEY = 100
 # BUY_COST = 200
 # UPGRADE_COST = 100
 
-LEVEL_COMPLETE_REWARD = 20
+LEVEL_COMPLETE_REWARD = 25
 
 level_count = 0
 level_group_count = 0
@@ -36,8 +36,8 @@ TURRET_SELL_VALUE = 0.75 #percentage of total money spent refunded
 
 VULNERABILITY_MULT = 1.5 #higher values make some towers more effective
 RESISTANCE_MULT = 0.7 #higher values make some towers less effective
-ENEMY_SPEED_CAP = 4.5 #enemy speed increases per level, up to this cap
-ENEMY_ARMOR_CAP = 0.55 #enemy armor increases per level, up to this cap
+ENEMY_SPEED_CAP = 4.25 #enemy speed increases per level, up to this cap
+ENEMY_ARMOR_CAP = 0.5 #enemy armor increases per level, up to this cap
 
 EFFECTS = {
     "dmg_over_time": {"dmg_mult": .13, "duration": 7500, "interval_time": 150, 'text': 'DoT'}, # higher dmg_mult, higher damage done based on tower's base dmg
