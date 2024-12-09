@@ -183,7 +183,7 @@ def draw_text(text, font, text_color, x, y):
 def display_data():
     pg.draw.rect(screen, "grey50", (c.SCREEN_WIDTH, 0, c.SIDE_PANEL, c.SCREEN_HEIGHT))
     pg.draw.rect(screen, "grey0", (c.SCREEN_WIDTH, 0, c.SIDE_PANEL, 206), 2)
-    pg.draw.rect(screen, "grey0", (c.SCREEN_WIDTH, 173, c.SIDE_PANEL, 325), 2)
+    pg.draw.rect(screen, "grey0", (c.SCREEN_WIDTH, 173, c.SIDE_PANEL, 345), 2)
     draw_text("LEVEL: " + str(world.level+1),med_font, "grey100", c.SCREEN_WIDTH + 10, 10)
     screen.blit(heart_image, (c.SCREEN_WIDTH + 10, 35))
     draw_text(str(world.hp),med_font, "grey100", c.SCREEN_WIDTH + 40, 35)
@@ -245,6 +245,7 @@ def update_info_panel(item):
         draw_text("Multi Target: " + targets, small_font, "grey100", c.SCREEN_WIDTH + 7, 440)
         draw_text("Projectile Speed: " + projectile_speed, small_font, "grey100", c.SCREEN_WIDTH + 7, 460)
         draw_text("Effect: " + effect, small_font, "grey100", c.SCREEN_WIDTH + 7, 480)
+        draw_text("Level: " + str(item.upgrade_level+1), small_font, "grey100", c.SCREEN_WIDTH + 7, 500)
 
     elif isinstance(item, Enemy):
         data = ENEMY_DATA[item.type[0]][item.type[1]]
@@ -314,6 +315,7 @@ def update_info_panel(item):
         draw_text("Multi Target: " + targets, small_font, "grey100", c.SCREEN_WIDTH + 7, 440)
         draw_text("Projectile Speed: " + projectile_speed, small_font, "grey100", c.SCREEN_WIDTH + 7, 460)
         draw_text("Effect: " + effect, small_font, "grey100", c.SCREEN_WIDTH + 7, 480)
+        draw_text("Level: 1", small_font, "grey100", c.SCREEN_WIDTH + 7, 500)
 
     elif type(item) is str:
         data = TURRET_DATA[item][0]
@@ -347,6 +349,7 @@ def update_info_panel(item):
         draw_text("Multi Target: " + targets, small_font, "grey100", c.SCREEN_WIDTH + 7, 440)
         draw_text("Projectile Speed: " + projectile_speed, small_font, "grey100", c.SCREEN_WIDTH + 7, 460)
         draw_text("Effect: " + effect, small_font, "grey100", c.SCREEN_WIDTH + 7, 480)
+        draw_text("Level: 1", small_font, "grey100", c.SCREEN_WIDTH + 7, 500)
     else:
         print('update_info_panel() function error')
 
