@@ -51,22 +51,23 @@ double_click_max_time_delay = .3 # max seconds between clicks to distinguish bet
 hiscore_saved = False
 final_score_updated = False
 
+#base SFX initialized
 archer_sfx = pg.mixer.Sound(TURRET_DATA["archer"][0]["projectile_sfx"])
 archer_sfx.set_volume(.2*volume)
 crossbowman_sfx = pg.mixer.Sound(TURRET_DATA["crossbowman"][0]["projectile_sfx"])
 crossbowman_sfx.set_volume(.2*volume)
 melee_sfx = pg.mixer.Sound(TURRET_DATA["melee"][0]["projectile_sfx"])
-melee_sfx.set_volume(.125*volume)
+melee_sfx.set_volume(.15*volume)
 siege_sfx = pg.mixer.Sound(TURRET_DATA["siege"][0]["projectile_sfx"])
 siege_sfx.set_volume(.2*volume)
 sniper_sfx = pg.mixer.Sound(TURRET_DATA["sniper"][0]["projectile_sfx"])
-sniper_sfx.set_volume(.02*volume)
+sniper_sfx.set_volume(.1*volume)
 fire_sfx = pg.mixer.Sound(TURRET_DATA["fire"][0]["projectile_sfx"])
-fire_sfx.set_volume(.10*volume)
+fire_sfx.set_volume(.12*volume)
 frost_sfx = pg.mixer.Sound(TURRET_DATA["frost"][0]["projectile_sfx"])
-frost_sfx.set_volume(.2*volume)
+frost_sfx.set_volume(.22*volume)
 poison_sfx = pg.mixer.Sound(TURRET_DATA["poison"][0]["projectile_sfx"])
-poison_sfx.set_volume(.3*volume)
+poison_sfx.set_volume(.32*volume)
 electric_sfx = pg.mixer.Sound(TURRET_DATA["electric"][0]["projectile_sfx"])
 electric_sfx.set_volume(.175*volume)
 
@@ -155,12 +156,6 @@ vol_up_image = pg.image.load('assets\\buttons\\vol_up.png').convert_alpha()
 vol_down_image = pg.image.load('assets\\buttons\\vol_down.png').convert_alpha()
 vol_icon_image = pg.image.load('assets\\buttons\\vol_icon.png').convert_alpha()
 hiscores_image = pg.image.load('assets\\buttons\\hiscores.png').convert_alpha()
-
-#create groups
-# enemy_group = pg.sprite.Group()
-# turret_group = pg.sprite.Group()
-# projectile_group = pg.sprite.Group()
-# button_turret_group = pg.sprite.Group()
 
 #create buttons
 buy_turret_buttons = [] #list
@@ -441,14 +436,14 @@ def next_track(index):
 def update_volume():
     archer_sfx.set_volume(.2*volume)
     crossbowman_sfx.set_volume(.2*volume)
-    melee_sfx.set_volume(.175*volume)
+    melee_sfx.set_volume(.15*volume)
     siege_sfx.set_volume(.2*volume)
-    sniper_sfx.set_volume(.15*volume)
-    fire_sfx.set_volume(.15*volume)
-    frost_sfx.set_volume(.2*volume)
-    poison_sfx.set_volume(.2*volume)
+    sniper_sfx.set_volume(.1*volume)
+    fire_sfx.set_volume(.12*volume)
+    frost_sfx.set_volume(.22*volume)
+    poison_sfx.set_volume(.32*volume)
     electric_sfx.set_volume(.25*volume)
-    pg.mixer.music.set_volume(0.2*volume)
+    pg.mixer.music.set_volume(0.175*volume)
 
 def save_hiscore():
     with open('data\\scores.txt', "r") as file:
@@ -498,11 +493,6 @@ wandering_waypoints = [] #list
 process_wandering_waypoints()
 spawn_wandering_enemy_timer = time.time()
 
-#world
-# world = World(world_data, map_image)
-# world.process_data()
-# world.process_enemies()
-
 run = True # should the game continue running?
 while run: #main game loop
     clock.tick(c.FPS) # set framerate cap
@@ -522,7 +512,7 @@ while run: #main game loop
         turret_group.update(enemy_group, world)
         projectile_group.update(world)
 
-        #turret/enemy selection if a turret is selected, update teh turret's "selected" member to True
+        #turret/enemy selection if a turret is selected, update the turret's "selected" member to True
         if selected_turrets != []:
             selected_turrets[0].selected = True
         if selected_enemy:
@@ -590,6 +580,7 @@ while run: #main game loop
                     enemy_group.add(enemy)
                     world.spawned_enemies += 1
                     last_enemy_spawn = pg.time.get_ticks()
+
         #sfx manager to prevent annoying spamming sfx
         for unit_type in sfx_data:
             data = sfx_data[unit_type]
@@ -685,10 +676,6 @@ while run: #main game loop
         
         for i in range(9):
             buy_turret_buttons[i].draw(screen)
-                # placing_turrets[i][0] = True
-                # for k in range(9):
-                #     if k != i:
-                #         placing_turrets[k][0] = False
         vol_up_button.draw(screen)
         vol_down_button.draw(screen)
         if hiscores_button.draw(screen):
@@ -698,7 +685,7 @@ while run: #main game loop
             draw_text("GAME OVER", large_font, "grey0", 310, 230)
         elif game_outcome == 1:
             draw_text("You WIN", large_font, "grey0", 310, 230)
-            if not final_score_updated:
+            if not final_score_updated: # add to score based on remaining health points
                 world.score += world.hp*c.SCORE_VALUE_PER_HP_ON_WIN
                 final_score_updated = True
         if not hiscore_saved:
@@ -709,13 +696,7 @@ while run: #main game loop
                     score, name = line.strip().split(", ")
                     hiscores.append((int(score), name))
             hiscore_saved = True
-        if restart_button.draw(screen): # resets level is restart button pressed
-            # save_hiscore()
-            # with open('data\\scores.txt', "r") as file: #update hiscores UI, players score will appear if it achieved top 10
-            #     hiscores = []
-            #     for line in file:
-            #         score, name = line.strip().split(", ")
-            #         hiscores.append((int(score), name))
+        if restart_button.draw(screen): # resets level if restart button pressed
             world.score = 0
             game_over = False
             level_started = False
@@ -748,8 +729,7 @@ while run: #main game loop
             mouse_position = pg.mouse.get_pos()
             if mouse_position[0] < c.SCREEN_WIDTH and mouse_position[1] < c.SCREEN_HEIGHT:
                 first_click_time = time.time()
-                if first_click_time - second_click_time > double_click_max_time_delay: #single click
-                    #clear selected turrets
+                if first_click_time - second_click_time > double_click_max_time_delay: #single click selection of turrets and enemies
                     selected_turrets = clear_turret_selection()
                     selected_enemy = clear_enemy_selection()
                     if any(i[0] for i in placing_turrets):
@@ -760,7 +740,7 @@ while run: #main game loop
                             selected_turrets.append(turret_selection)
                         selected_enemy = select_enemy(mouse_position)
                 else: #double click
-                    if selected_turrets != []: #select all like turrets
+                    if selected_turrets != []: #select all like-turrets
                         if select_turret(mouse_position) is not None and selected_turrets[0].type == select_turret(mouse_position).type and selected_turrets[0].upgrade_level == select_turret(mouse_position).upgrade_level:
                             selected_enemy = clear_enemy_selection()
                             selected_turret_type = selected_turrets[0].type
@@ -771,7 +751,7 @@ while run: #main game loop
                                     turret.selected = True
                                     selected_turrets.append(turret)
                     else:
-                        #clear selected turrets
+                        #allow placing turrets during double clicks
                         selected_turrets = clear_turret_selection()
                         selected_enemy = clear_enemy_selection()
                         if any(i[0] for i in placing_turrets):
@@ -782,34 +762,6 @@ while run: #main game loop
                                 selected_turrets.append(turret_selection)
                             selected_enemy = select_enemy(mouse_position)
                 second_click_time = first_click_time
-
-        # if event.type == pg.MOUSEBUTTONDOWN and event.button == 1:
-        #     mouse_position = pg.mouse.get_pos()
-        #     if mouse_position[0] < c.SCREEN_WIDTH and mouse_position[1] < c.SCREEN_HEIGHT:
-        #         first_click_time = time.time()
-        #         if first_click_time - second_click_time > double_click_max_time_delay: #single click
-        #             #clear selected turrets
-        #             selected_turrets = clear_turret_selection()
-        #             selected_enemy = clear_enemy_selection()
-        #             if any(i[0] for i in placing_turrets):
-        #                 create_turret(mouse_position, turret_group)
-        #             else:
-        #                 turret_selection = select_turret(mouse_position)
-        #                 if turret_selection is not None:
-        #                     selected_turrets.append(turret_selection)
-        #                 selected_enemy = select_enemy(mouse_position)
-        #         else: #double click
-        #             if selected_turrets != []: #select all like turrets
-        #                 if select_turret(mouse_position) is not None and selected_turrets[0].type == select_turret(mouse_position).type and selected_turrets[0].upgrade_level == select_turret(mouse_position).upgrade_level:
-        #                     selected_enemy = clear_enemy_selection()
-        #                     selected_turret_type = selected_turrets[0].type
-        #                     selected_turret_level = selected_turrets[0].upgrade_level
-        #                     selected_turrets = clear_turret_selection()
-        #                     for turret in turret_group:
-        #                         if turret.type == selected_turret_type and turret.upgrade_level == selected_turret_level:
-        #                             turret.selected = True
-        #                             selected_turrets.append(turret)
-        #         second_click_time = first_click_time
 
         #mouse click (right)
         if event.type == pg.MOUSEBUTTONDOWN and event.button == 3: # clear turret placement bools, turret selection, or enemy selection
@@ -823,15 +775,15 @@ while run: #main game loop
         keys = pg.key.get_pressed()
         if event.type == pg.KEYDOWN and not typing:
             if event.key == pg.K_m:
-                world.money += 1000 #cheat
+                world.money += 1000 #demo cheat
             if event.key == pg.K_s:
-                world.score += 1000 #cheat
+                world.score += 1000 #demo cheat
             if event.key == pg.K_h:
-                world.hp -= 10 #anti cheat
+                world.hp -= 10 #demo cheat
             if keys[pg.K_z] and keys[pg.K_LCTRL]: #control-z / undo a number of tower builds and/or upgrades equal to the corresponding value in constants.py - deque implementation
                 try:
                     func = world.undo_deck.pop()
-                    print(func)
+                    # print(func)
                     func()
                     selected_turrets = clear_turret_selection()
                 except:

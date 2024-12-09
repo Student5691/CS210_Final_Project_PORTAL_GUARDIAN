@@ -83,7 +83,6 @@ class World():
     #determine next enemy category based on value of current node
     def traverse_tree(self, choice):
         if self.tree_level < c.TOTAL_GROUPS-1:
-            # self.tree_level += 1
             if choice == 0:
                 self.currentNode = self.leftNode
                 self.leftNode = self.currentNode.left

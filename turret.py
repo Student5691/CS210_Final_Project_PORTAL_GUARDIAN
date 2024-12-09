@@ -138,15 +138,6 @@ class Turret(pg.sprite.Sprite):
                 self.kill()
 
     def undo_sell(self, world, refund):
-        # position = (self.tile_x, self.tile_y)
-        # for turret in self.turret_group:
-        #     if position == (turret.tile_x, turret.tile_y):
-        #         print('Position occupied, failed to undo the "sell" action.')
-        #         return
-        # if world.money < refund:
-        #     print('Not enough money to return the sell value, failed to undo the "sell" action.')
-        #     return
-        # old_turret = Turret(self.type, self.tile_x, self.tile_y, self.projectile_group, self.turret_group, self.sfx_data)
         self.turret_group.add(self)
         world.money -= refund
 

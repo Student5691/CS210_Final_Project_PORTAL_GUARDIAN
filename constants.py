@@ -14,9 +14,6 @@ PLAYER_HP = 100
 SCORE_VALUE_PER_HP_ON_WIN = 10
 PLAYER_MONEY = 100
 
-# BUY_COST = 200
-# UPGRADE_COST = 100
-
 LEVEL_COMPLETE_REWARD = 25
 
 level_count = 0
@@ -45,11 +42,11 @@ EFFECTS = {
     "stun": {"cooldown": 7000,"duration": 2500, 'text': "Stun"}, #cooldown is how many millisec an enemy is immune to stun after a stun effect falls off
     "armor_pen": {"armor_mult": 1.5, "duration": 0, 'text': "Armor Pen"}, # the higher armor_mult, the more dmg done
 }
-ARMOR_PEN_EFFECTIVENESS = .75 #high numbers are more effective, 1 for no change, 0 to nullify the effect, negative values heal the target, values between 0 and 1 (exclusive) to dampen the effect
+ARMOR_PEN_EFFECTIVENESS = 1.1 #high numbers are more effective, 1 for no change, 0 to nullify the effect, negative values heal the target, values between 0 and 1 (exclusive) to dampen the effect
 
 ENEMY_CATEGORIES = ['animal', 'construct', 'dragon', 'goblin', 'humanoid', 'monstrous', 'undead'] #used to convert indexes to keys for hash table look ups in certain cases
 
-DMG_TYPES = {"electric": "Electric", "fire": "Fire", "frost": "Cold", "heavy": "Heavy", "pierce": "Piercing", "poison": "Poison", "ranged": "Ranged", "slash": "Slashing"} #used to aid in draw_text UI applciations
+DMG_TYPES = {"electric": "Electric", "fire": "Fire", "frost": "Cold", "heavy": "Heavy", "pierce": "Piercing", "poison": "Poison", "ranged": "Ranged", "slash": "Slashing"} #used to aid in draw_text UI applications
 
 TURRET_LIST = ["archer", "crossbowman", "melee", "siege", "sniper", "fire", "frost", "poison", "electric"] #used to convert indexes to keys for hash table look ups in certain cases
 

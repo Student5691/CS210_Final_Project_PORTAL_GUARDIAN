@@ -59,8 +59,8 @@ class Projectile(pg.sprite.Sprite):
                 self.target_enemy.effect.append(effect)
                 self.target_enemy.effect_data.append((effect, pg.time.get_ticks(), self))
     
-    def self_destruct(self): #self destruct after 15 seconds
-        if time.time() > self.created + 15:
+    def self_destruct(self): #self destruct after 10 seconds
+        if time.time() > self.created + 10:
             self.kill()
             del self
             return

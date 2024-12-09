@@ -24,7 +24,6 @@ class Enemy(pg.sprite.Sprite):
         else:
             self.base_speed = c.ENEMY_SPEED_CAP
         self.speed = self.base_speed
-        # self.value = int(ENEMY_DATA[self.type[0]][self.type[1]]["value"]*c.DIFFICULTY_VALUE_MULT(self.world.level))
         self.value = 1 + int(ENEMY_DATA[self.type[0]][self.type[1]]["value"]*c.DIFFICULTY_VALUE_MULT(self.world.level)*1.25)
 
         if ENEMY_DATA[self.type[0]][self.type[1]]["armor"]*c.DIFFICULTY_ARMOR_MULT(self.world.level) < c.ENEMY_ARMOR_CAP:
